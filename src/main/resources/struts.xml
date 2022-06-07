@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts strConfiguration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.ui.theme" value="css_xhtml" />
+    <constant name="struts.devMode" value="true" />
+
+    <constant name="struts.convention.action.suffix" value="Controller"/>
+    <constant name="struts.convention.action.mapAllMatches" value="true"/>
+    <constant name="struts.convention.default.parent.package" value="rest-default"/>
+    <constant name="struts.convention.package.locators" value="rest"/>
+
+    <constant name="struts.mapper.class" value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" />
+    <constant name="struts.mapper.prefixMapping" value="/api:rest,:struts"/>
+    <constant name="struts.rest.namespace" value="/api" />
+
+
+    <package name="basicstruts2" namespace="/" extends="struts-default">
+    <default-action-ref name="index"/>
+
+        <action name="index">
+            <result>/index.jsp</result>
+        </action>
+
+        <action name="Login" class="com.example.proj.action.Login" method="execute">
+            <interceptor-ref name="defaultStack"/>
+            <result name="input">/index.jsp</result>
+            <result name="success">/Welcome.jsp</result>
+            <result name="error">/Error.jsp</result>
+        </action>
+
+        <action name="Register" class="com.example.proj.action.Register" method="execute">
+            <result name="input">/Register.jsp</result>
+            <result name="success">/Thankyou.jsp</result>
+            <result name="error">/Error.jsp</result>
+        </action>
+
+        <action name="List" class="com.example.proj.action.List" method="execute">
+            <result name="success">/List.jsp</result>
+        </action>
+
+        <action name="DisplayUser" class="com.example.proj.action.List" method="DisplayUser">
+            <result name="success">/Welcome.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="api" namespace="/api" extends="rest-default">
+        <action name="accounts/*" class="com.example.proj.rest.AccountsController">
+            <param name="id">{1}</param>
+        </action>
+    </package>
+
+</struts>
